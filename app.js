@@ -72,7 +72,9 @@ app.post('/',function(req,res, next){
 
 
   if(req.body['Add Item']){
-
+    // Push task, city, and ID onto req
+    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId, "weather": weather.owm});
+    req.session.curId++;
 
     // make weather request for city
     let weather = {};
@@ -80,9 +82,6 @@ app.post('/',function(req,res, next){
     if (!err && response.statusCode < 400) {
       weather.owm = body;
       console.log(body)
-          // Push task, city, and ID onto req
-    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather": weather.owm, "id":req.session.curId, });
-    req.session.curId++;
 
     } else {
       console.log(err);
