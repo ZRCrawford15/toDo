@@ -35,22 +35,7 @@ app.get('/',function(req,res,next){
   res.render('toDo',context);
 });
 
-app.post('/', function(req, res, next) {
-  let weather = {};
-  request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
-    if (!err && response.statusCode < 400) {
-      weather.owm = body;
-      console.log(body)
-    } else {
-      console.log(err);
-      if(response) {
-        console.log(response.statusCode)
-      }
-    }
-    next(err)
-  });
 
-});
 app.post('/',function(req,res){
   var context = {};
 
@@ -67,7 +52,23 @@ app.post('/',function(req,res){
   }
 
   if(req.body['Add Item']){
-    req.session.toDo.push({"name":req.body.name, "city":weather.owm, "id":req.session.curId});
+    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
+    app.post('/', function(req, res, next) {
+      let weather = {};
+      request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
+        if (!err && response.statusCode < 400) {
+          weather.owm = body;
+          console.log(body)
+        } else {
+          console.log(err);
+          if(response) {
+            console.log(response.statusCode)
+          }
+        }
+        next(err)
+      });
+
+});
     // let context = {}
     // request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body) {
     //   if (!err && response.statusCode < 400) {
