@@ -75,10 +75,10 @@ app.post('/',function(req,res, next){
     request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
     if (!err && response.statusCode < 400) {
       console.log(body)
-      context.owm = body
+      // context.owm = body
       // req.session.toDo.push("weather": req)
       // console.log(context.owm)
-
+      req.session.weather = body
 
 
     } else {
@@ -87,11 +87,11 @@ app.post('/',function(req,res, next){
         console.log(response.statusCode)
       }
     }
-      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather":context.owm, "id":req.session.curId});
-      req.session.curId++;
+
     // next(err)
   });
-
+    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather":req.session.weather, "id":req.session.curId});
+    req.session.curId++;
   }
 
   if(req.body['Done']){
