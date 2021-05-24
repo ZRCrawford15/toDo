@@ -42,7 +42,7 @@ app.post('/',function(req,res){
   }
 
   if(req.body['Add Item']){
-    req.session.toDo.push({"name":req.body.name, "id":req.session.curId});
+    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
     req.session.curId++;
   }
 
