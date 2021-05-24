@@ -20,6 +20,21 @@ app.set('view engine', 'handlebars');
 app.set('port', 5321);
 
 
+app.post('/', function(req, res, next) {
+  let weather = {};
+  request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
+    if (!err && response.statusCode < 400) {
+      weather.owm = body;
+      console.log(body)
+    } else {
+      console.log(err);
+      if(response) {
+        console.log(response.statusCode)
+      }
+    }
+    next(err)
+  });
+
 
 app.get('/',function(req,res,next){
   var context = {};
@@ -74,6 +89,8 @@ app.post('/',function(req,res){
     })
   }
 
+
+});
   context.name = req.session.name;
   context.toDoCount = req.session.toDo.length;
   context.toDo = req.session.toDo;
@@ -81,21 +98,7 @@ app.post('/',function(req,res){
   res.render('toDo',context);
 });
 
-app.post('/', function(req, res, next) {
-  let weather = {};
-  request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
-    if (!err && response.statusCode < 400) {
-      weather.owm = body;
-      console.log(body)
-    } else {
-      console.log(err);
-      if(response) {
-        console.log(response.statusCode)
-      }
-    }
-    next(err)
-  });
-});
+
 
 app.use(function(req,res){
   res.status(404);
