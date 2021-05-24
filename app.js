@@ -85,7 +85,7 @@ app.post('/',function(req,res, next){
     }
 
     // next(err)
-  });, "id":req.session.curId});
+  }), "id":req.session.curId});
       req.session.curId++;
 
   }
