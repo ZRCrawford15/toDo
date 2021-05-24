@@ -43,7 +43,7 @@ app.post('/',function(req,res, next){
     req.session.name = req.body.name;
     req.session.toDo = [];
     req.session.curId = 0;
-    // req.session.weather = null
+    req.session.weather = null
   }
 
   //If there is no session, go to the main page.
@@ -63,8 +63,8 @@ app.post('/',function(req,res, next){
       // console.log(response);
       let temp = response.main.temp;
       console.log(temp);
-      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather":temp, "id":req.session.curId});
-      req.session.curId++;
+      req.session.weather = temp
+
 
 
       // console.log(response.body)
@@ -85,6 +85,8 @@ app.post('/',function(req,res, next){
     // next(err)
   });
     // Push task, city, and ID onto req
+      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather":req.session.weather, "id":req.session.curId});
+      req.session.curId++;
 
   }
 
