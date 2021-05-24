@@ -1,39 +1,79 @@
-let express = require('express');
+var express = require('express');
 
-let app = express();
-let handlebars = require('express-handlebars').create({defaultLayout:'main'});
-let session = require('express-session');
-let bodyParser = require('body-parser');
+var app = express();
+var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+var session = require('express-session');
+var bodyParser = require('body-parser');
 
-app.use(bodyParser.urlencoded({ extend: false}));
-app.use(session({secret: 'password'}));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({secret:'SuperSecretPassword'}));
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 23950);
+app.set('port', 5321);
 
+let key = 'd38e842ac476454d18109f49c5cef3e6';
 
-app.get('/count', function(req, res) {
-	let context = {};
-	context.count = req.session.count || 0;
-	req.session.count = context.count + 1;
-	res.render('count', context)
+app.get('/',function(req,res,next){
+  var context = {};
+  //If there is no session, go to the main page.
+  if(!req.session.name){
+    res.render('newSession', context);
+    return;
+  }
+  context.name = req.session.name;
+  context.toDoCount = req.session.toDo.length || 0;
+  context.toDo = req.session.toDo || [];
+  console.log(context.toDo);
+  res.render('toDo',context);
 });
 
-app.post('/count', function(req, res) {
-	let context = {};
-	if (req.body.command === "resetCount"){
-		req.session.count = 0;
-	} else {
-		context.err = true;
-	}
-	context.count = req.session.count || 0;
-	req.session.count = context.count + 1;
-	res.render('count', context);
+app.post('/',function(req,res){
+  var context = {};
 
-})
+  if(req.body['New List']){
+    req.session.name = req.body.name;
+    req.session.toDo = [];
+    req.session.curId = 0;
+  }
 
+  //If there is no session, go to the main page.
+  if(!req.session.name){
+    res.render('newSession', context);
+    return;
+  }
+
+  if(req.body['Add Item']){
+    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
+    req.session.curId++;
+  }
+
+  if(req.body['Done']){
+    req.session.toDo = req.session.toDo.filter(function(e){
+      return e.id != req.body.id;
+    })
+  }
+
+  context.name = req.session.name;
+  context.toDoCount = req.session.toDo.length;
+  context.toDo = req.session.toDo;
+  console.log(context.toDo);
+  res.render('toDo',context);
+});
+
+app.use(function(req,res){
+  res.status(404);
+  res.render('404');
+});
+
+app.use(function(err, req, res, next){
+  console.error(err.stack);
+  res.type('plain/text');
+  res.status(500);
+  res.render('500');
+});
 
 app.listen(app.get('port'), function(){
-	console.log("express started on http://localhost:" + app.get('port') + "; press Ctrl-C to terminate.");
-})
+  console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+});
