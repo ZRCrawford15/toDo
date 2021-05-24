@@ -77,8 +77,7 @@ app.post('/',function(req,res, next){
     if (!err && response.statusCode < 400) {
       weather.owm = body;
       console.log(body)
-      req.session.toDo.push({"name":req.body.name, "city":weather.owm, "id":req.session.curId});
-      req.session.curId++;
+
     } else {
       console.log(err);
       if(response) {
@@ -87,7 +86,8 @@ app.post('/',function(req,res, next){
     }
     // next(err)
   });
-
+    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
+    req.session.curId++;
   }
 
   if(req.body['Done']){
