@@ -4,6 +4,7 @@ var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var session = require('express-session');
 var bodyParser = require('body-parser');
+let request = require('')
 
 
 let key = 'd38e842ac476454d18109f49c5cef3e6';
@@ -32,6 +33,21 @@ app.get('/',function(req,res,next){
   res.render('toDo',context);
 });
 
+app.get('/', function(req, res, next){
+      let context = {}
+    request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body) {
+      if (!err && response.statusCode < 400) {
+        context.owm = body;
+      } else {
+        console.log(err);
+        if (response) {
+          console.log(response.statusCode);
+        }
+      }
+      next(err);
+    });
+  });
+
 app.post('/',function(req,res){
   var context = {};
 
@@ -49,18 +65,6 @@ app.post('/',function(req,res){
 
   if(req.body['Add Item']){
     req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
-    let context = {}
-    request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body) {
-      if (!err && response.statusCode < 400) {
-        context.owm = body;
-      } else {
-        console.log(err);
-        if (response) {
-          console.log(response.statusCode);
-        }
-      }
-      next(err);
-    })
     req.session.curId++;
   }
 
