@@ -31,13 +31,13 @@ app.get('/',function(req,res,next){
   context.name = req.session.name;
   context.toDoCount = req.session.toDo.length || 0;
   context.toDo = req.session.toDo || [];
-  context.weather = null
+  // context.weather = null
   console.log(context.toDo);
   res.render('toDo',context);
 });
 
 
-app.post('/',function(req,res, next){
+app.post('/',function(req, res, next){
   var context = {};
 
   if(req.body['New List']){
@@ -57,6 +57,7 @@ app.post('/',function(req,res, next){
 
     // make weather request for city
 
+    current_temp = {};
     request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
     if (!err && response.statusCode < 400) {
 
@@ -64,13 +65,12 @@ app.post('/',function(req,res, next){
       // console.log(response);
       let temp = response.main.temp;
       console.log(temp);
-      context.weather = temp;
+      current_temp.weather = temp;
+      current_temp.name = req.body.name;
+      current_temp.city = req.body.city;
+      current_temp.id = req.session.curId;
       // debugger;
       // return req.body.weather;
-
-
-
-
       // console.log(response.body)
       // req.session.weather = response.body
       // context.owm = body
@@ -90,7 +90,7 @@ app.post('/',function(req,res, next){
   });
     // Push task, city, and ID onto req
     // tried putting entire request function into "weather"
-      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather": req.body.weather, "id":req.session.curId});
+      req.session.toDo.push(current_temp);
       req.session.curId++;
 
   }
@@ -105,7 +105,7 @@ app.post('/',function(req,res, next){
   context.toDoCount = req.session.toDo.length;
   context.toDo = req.session.toDo;
   console.log(context.toDo);
-  res.render('toDo',context);
+  res.render('toDo', context);
 });
 
 
