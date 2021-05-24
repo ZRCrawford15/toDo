@@ -82,7 +82,7 @@ app.post('/',function(req,res, next){
     if (!err && response.statusCode < 400) {
       context.weather = body
       // req.session.toDo.push("weather": req)
-      console.log(weather.owm)
+      console.log(body)
 
     } else {
       console.log(err);
