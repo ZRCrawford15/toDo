@@ -60,9 +60,9 @@ app.post('/',function(req,res, next){
     if (!err && response.statusCode < 400) {
 
       let response = (JSON.parse(body));
-      console.log(response);
+      // console.log(response);
       let temp = response.main.temp;
-      console.log.temp;
+      console.log(temp);
 
       // console.log(response.body)
       // req.session.weather = response.body
