@@ -78,8 +78,7 @@ app.post('/',function(req,res, next){
       context.owm = body
       // req.session.toDo.push("weather": req)
       // console.log(context.owm)
-      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather":body, "id":req.session.curId});
-      req.session.curId++;
+
 
 
     } else {
@@ -88,6 +87,8 @@ app.post('/',function(req,res, next){
         console.log(response.statusCode)
       }
     }
+      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather":context.owm, "id":req.session.curId});
+      req.session.curId++;
     // next(err)
   });
 
