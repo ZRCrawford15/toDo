@@ -61,6 +61,7 @@ app.post('/',function(req,res, next){
     req.session.name = req.body.name;
     req.session.toDo = [];
     req.session.curId = 0;
+    req.session.weather = null
   }
 
   //If there is no session, go to the main page.
@@ -94,7 +95,6 @@ app.post('/',function(req,res, next){
     req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
     req.session.curId++;
   }
-  
 
   if(req.body['Done']){
     req.session.toDo = req.session.toDo.filter(function(e){
