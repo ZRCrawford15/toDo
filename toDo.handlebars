@@ -12,7 +12,8 @@
 <ul>
   {{#each toDo}}
   <li>
-    <h3 id="{{this.city}}">{{this.name}}</h3>
+    <h3 id={{this.city}}>{{this.name}}</h3>
+    <h2> the weather in {{this.city}} is {{owm}} 
     <form method="post">
       <input type="hidden" name="id" value="{{this.id}}">
       <input type="submit" name="Done" value="Mark as Done">
