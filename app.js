@@ -63,6 +63,7 @@ app.post('/',function(req,res, next){
       // console.log(response);
       let temp = response.main.temp;
       console.log(temp);
+      req.session.weather = temp;
 
       // console.log(response.body)
       // req.session.weather = response.body
