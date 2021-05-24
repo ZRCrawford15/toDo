@@ -63,7 +63,7 @@ app.post('/',function(req,res, next){
       // console.log(response);
       let temp = response.main.temp;
       console.log(temp);
-      context.weather = temp
+      return temp;
 
 
 
@@ -85,7 +85,7 @@ app.post('/',function(req,res, next){
     // next(err)
   });
     // Push task, city, and ID onto req
-      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather":context.weather, "id":req.session.curId});
+      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather":temp, "id":req.session.curId});
       req.session.curId++;
 
   }
