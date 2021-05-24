@@ -60,6 +60,7 @@ app.post('/',function(req,res, next){
     req.session.name = req.body.name;
     req.session.toDo = [];
     req.session.curId = 0;
+    req.session.weather = null;
     // req.session.weather = null
   }
 
