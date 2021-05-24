@@ -36,21 +36,21 @@ app.get('/',function(req,res,next){
 });
 
 
-app.post('/', function(req, res, next) {
-  let weather = {};
-  request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
-    if (!err && response.statusCode < 400) {
-      weather.owm = body;
-      console.log(body)
-    } else {
-      console.log(err);
-      if(response) {
-        console.log(response.statusCode)
-      }
-    }
-    next(err)
-  });
-});
+// app.post('/', function(req, res, next) {
+//   let weather = {};
+//   request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
+//     if (!err && response.statusCode < 400) {
+//       weather.owm = body;
+//       console.log(body)
+//     } else {
+//       console.log(err);
+//       if(response) {
+//         console.log(response.statusCode)
+//       }
+//     }
+//     next(err)
+//   });
+// });
 
 
 
