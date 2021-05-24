@@ -72,6 +72,7 @@ app.post('/',function(req, res, next){
 
       req.session.toDo.push(current_temp);
       req.session.curId++;
+      console.log(req.session.toDo);
       // debugger;
       // return req.body.weather;
       // console.log(response.body)
