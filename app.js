@@ -31,6 +31,7 @@ app.get('/',function(req,res,next){
   context.name = req.session.name;
   context.toDoCount = req.session.toDo.length || 0;
   context.toDo = req.session.toDo || [];
+  context.weather = null
   console.log(context.toDo);
   res.render('toDo',context);
 });
@@ -63,9 +64,9 @@ app.post('/',function(req,res, next){
       // console.log(response);
       let temp = response.main.temp;
       console.log(temp);
-      req.body.weather = temp;
-      debugger;
-      return req.body.weather;
+      context.weather = temp;
+      // debugger;
+      // return req.body.weather;
 
 
 
