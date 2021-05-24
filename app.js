@@ -35,7 +35,7 @@ app.get('/',function(req,res,next){
   res.render('toDo',context);
 });
 
-app.get('/', function(req, res, next))
+app.get('/', function(req, res, next) {
   let weather = {};
   request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
     if (!err && response.statusCode < 400) {
@@ -47,8 +47,9 @@ app.get('/', function(req, res, next))
       }
     }
     next(err)
-  })
+  });
 
+});
 app.post('/',function(req,res){
   var context = {};
 
