@@ -88,7 +88,7 @@ app.post('/',function(req,res, next){
     }
     // next(err)
   });
-    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
+    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather":req.body.owm, "id":req.session.curId});
     req.session.curId++;
   }
 
