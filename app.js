@@ -83,6 +83,7 @@ app.post('/',function(req,res, next){
       context.weather = body
       // req.session.toDo.push("weather": req)
       console.log(context.weather)
+      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather" context.weather, "id":req.session.curId});
 
     } else {
       console.log(err);
@@ -92,7 +93,7 @@ app.post('/',function(req,res, next){
     }
     // next(err)
   });
-    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
+
     req.session.curId++;
   }
 
