@@ -4,6 +4,7 @@ var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var session = require('express-session');
 var bodyParser = require('body-parser');
+let request = require('request')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({secret:'SuperSecretPassword'}));
