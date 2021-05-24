@@ -69,6 +69,9 @@ app.post('/',function(req, res, next){
       current_temp.name = req.body.name;
       current_temp.city = req.body.city;
       current_temp.id = req.session.curId;
+
+      req.session.toDo.push(current_temp);
+      req.session.curId++;
       // debugger;
       // return req.body.weather;
       // console.log(response.body)
@@ -90,8 +93,7 @@ app.post('/',function(req, res, next){
   });
     // Push task, city, and ID onto req
     // tried putting entire request function into "weather"
-      req.session.toDo.push(current_temp);
-      req.session.curId++;
+
 
   }
 
