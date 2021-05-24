@@ -73,16 +73,15 @@ app.post('/',function(req,res, next){
 
   if(req.body['Add Item']){
     // Push task, city, and ID onto req
-    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
-    req.session.curId++;
+
 
     // make weather request for city
     let weather = {};
     request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
     if (!err && response.statusCode < 400) {
-      // weather.owm = body;
+      weather.owm = body;
       console.log(body)
-      req.session.toDo.push({"weather":req.body.owm})
+      req.session.toDo.push({"weather":weather.owm})
 
     } else {
       console.log(err);
@@ -92,6 +91,8 @@ app.post('/',function(req,res, next){
     }
     // next(err)
   });
+    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
+    req.session.curId++;
   }
 
   if(req.body['Done']){
