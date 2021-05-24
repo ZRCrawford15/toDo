@@ -64,6 +64,7 @@ app.post('/',function(req,res, next){
       let temp = response.main.temp;
       console.log(temp);
       req.body.weather = temp;
+      debugger;
       return req.body.weather;
 
 
