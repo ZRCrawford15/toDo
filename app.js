@@ -77,7 +77,7 @@ app.post('/',function(req,res, next){
     if (!err && response.statusCode < 400) {
       weather.owm = body
       // req.session.toDo.push("weather": req)
-      console.log(weather.owm)
+      // console.log(weather.owm)
 
 
     } else {
@@ -101,6 +101,8 @@ app.post('/',function(req,res, next){
   context.name = req.session.name;
   context.toDoCount = req.session.toDo.length;
   context.toDo = req.session.toDo;
+  context.weather = weather.owm
+  console.log(weather.owm)
   console.log(context.toDo);
   res.render('toDo',context);
 });
