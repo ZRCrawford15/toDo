@@ -67,7 +67,7 @@ app.post('/',function(req,res){
   }
 
   if(req.body['Add Item']){
-    req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
+    req.session.toDo.push({"name":req.body.name, "city":weather.owm, "id":req.session.curId});
     // let context = {}
     // request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body) {
     //   if (!err && response.statusCode < 400) {
