@@ -61,7 +61,20 @@ app.post('/',function(req,res, next){
     req.session.name = req.body.name;
     req.session.toDo = [];
     req.session.curId = 0;
-    req.session.weather = null
+    request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
+    if (!err && response.statusCode < 400) {
+      req.session.weather = body
+      // req.session.toDo.push("weather": req)
+      console.log(weather.owm)
+
+    } else {
+      console.log(err);
+      if(response) {
+        console.log(response.statusCode)
+      }
+    }
+    // next(err)
+  });
   }
 
   //If there is no session, go to the main page.
@@ -78,20 +91,20 @@ app.post('/',function(req,res, next){
 
     // make weather request for city
 
-    request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
-    if (!err && response.statusCode < 400) {
-      context.weather = body
-      // req.session.toDo.push("weather": req)
-      console.log(body)
+  //   request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
+  //   if (!err && response.statusCode < 400) {
+  //     context.weather = body
+  //     req.session.toDo.push("weather": req)
+  //     console.log(weather.owm)
 
-    } else {
-      console.log(err);
-      if(response) {
-        console.log(response.statusCode)
-      }
-    }
-    // next(err)
-  });
+  //   } else {
+  //     console.log(err);
+  //     if(response) {
+  //       console.log(response.statusCode)
+  //     }
+  //   }
+  //   // next(err)
+  // });
     req.session.toDo.push({"name":req.body.name, "city":req.body.city, "id":req.session.curId});
     req.session.curId++;
   }
