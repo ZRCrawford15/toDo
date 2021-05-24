@@ -4,8 +4,8 @@ var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var session = require('express-session');
 var bodyParser = require('body-parser');
-let request = require('')
 
+var request = require('request');
 
 let key = 'd38e842ac476454d18109f49c5cef3e6';
 
