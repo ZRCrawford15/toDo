@@ -60,7 +60,6 @@ app.post('/',function(req,res, next){
     req.session.name = req.body.name;
     req.session.toDo = [];
     req.session.curId = 0;
-    req.session.weather = null;
     // req.session.weather = null
   }
 
@@ -76,8 +75,12 @@ app.post('/',function(req,res, next){
 
     request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
     if (!err && response.statusCode < 400) {
-      console.log(response.body.description)
-      req.session.weather = response.body.description
+
+      let response = (JSON.parse(response.body))
+      console.log(response)
+
+      // console.log(response.body)
+      // req.session.weather = response.body
       // context.owm = body
       // req.session.toDo.push("weather": req)
       // console.log(context.owm)
