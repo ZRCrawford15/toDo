@@ -58,7 +58,8 @@ app.post('/',function(req,res, next){
 
 
     // Push task, city, and ID onto req
-      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather": request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
+      req.session.toDo.push({"name":req.body.name, "city":req.body.city,
+        "weather": request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
     if (!err && response.statusCode < 400) {
 
       let response = (JSON.parse(body));
@@ -66,17 +67,7 @@ app.post('/',function(req,res, next){
       let temp = response.main.temp;
       console.log(temp);
       return temp;
-
-
-
-      // console.log(response.body)
-      // req.session.weather = response.body
-      // context.owm = body
-      // req.session.toDo.push("weather": req)
-      // console.log(context.owm)
-      // req.session.weather = body
-
-
+      
     } else {
       console.log(err);
       if(response) {
@@ -84,9 +75,13 @@ app.post('/',function(req,res, next){
       }
     }
 
-    // next(err)
+
   }), "id":req.session.curId});
+
       req.session.curId++;
+
+
+
 
   }
 
