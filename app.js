@@ -86,7 +86,7 @@ app.post('/',function(req,res, next){
   });
     // Push task, city, and ID onto req
     // tried putting entire request function into "weather"
-      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather":, "id":req.session.curId});
+      req.session.toDo.push({"name":req.body.name, "city":req.body.city, "weather": req.body.weather, "id":req.session.curId});
       req.session.curId++;
 
   }
