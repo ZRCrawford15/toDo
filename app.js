@@ -33,8 +33,6 @@ app.get('/',function(req,res,next){
   res.render('toDo',context);
 });
 
-app.get('/', function(req, res, next){
-
 app.post('/',function(req,res){
   var context = {};
 
@@ -63,7 +61,7 @@ app.post('/',function(req,res){
         }
       }
       next(err);
-    });
+    })
     req.session.curId++;
   }
 
