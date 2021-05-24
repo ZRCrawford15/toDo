@@ -80,7 +80,7 @@ app.post('/',function(req,res, next){
     let weather = {};
     request('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.city + '&APPID=' + key, function(err, response, body){
     if (!err && response.statusCode < 400) {
-      weather.owm = body;
+      // weather.owm = body;
       console.log(body)
       req.session.toDo.push({"weather":req.body.owm})
 
